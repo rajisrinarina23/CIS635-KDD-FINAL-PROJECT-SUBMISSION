@@ -1,0 +1,76 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+## Importing libraries
+```{r}
+library(stats)
+library(dplyr)
+library(ggplot2)
+library(ggfortify)
+library(cluster)
+library(readr)
+library(factoextra)
+```
+
+## Load the dataset
+```{r}
+data1 <- read.csv("Customersdata.csv")
+
+```
+
+## Data Preprocessing
+```{r}
+# Sub-setting of only numerical type of data columns from the data set
+data <- data1 %>% select(Channel, Region, Age, Fresh, Milk, Grocery, Frozen, Detergents_Paper,
+                         Delicatessen, Annual.Income..k..)
+```
+
+## Preprocessed dataset
+```{r}
+# Printing of the top 3 rows of preprocessed dataset
+head(data, n=3) 
+```
+
+## Setting seed
+```{r}
+set.seed(1)# Setting seed 1 as a random number
+```
+
+## Implementing of K Means Clustering Algorithm for clustering the customer
+```{r}
+# Implementing K-means clustering with k=6
+KMC = kmeans(data,6)
+```
+
+## Plotting of K means clustering
+```{r}
+# cluster plotting of K Means Clustering
+autoplot(KMC,data,frame=TRUE)
+```
+
+## Evaluation of K means clustering
+```{r}
+#Evaluating K means clustering
+eval(KMC)
+```
+
+## Implementing of Hierarchical Clustering Algorithm
+```{r}
+# Implementing of hierarchical clustering in proprocessed dataset
+hcluster <- hcut(data, k = 6, stand = TRUE)
+```
+
+## Plotting of hierarchical clustering using a dendogram
+```{r}
+# Plotting for the hierarchical clustering
+fviz_dend(hcluster, show_labels = FALSE, rect = TRUE, cex =0.5)
+```
+
+## Evaluation of Hierarchical clustering
+```{r}
+#Evaluating Hierarchical clustering
+eval(hcluster)
+```
+
